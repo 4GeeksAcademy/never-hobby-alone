@@ -1,3 +1,39 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+.botonpurpura-oscuro{
+    background-color: #b50dfd;
+    border-color: #b50dfd;
+}
+
+.botonpurpura-claro{
+    background-color: #d7a8eb;
+    border-color: #d7a8eb;
+}
+
+/* FONDOS  */
+.bg-100 {
+    background-color: #FFFBF5;
+}
+.bg-200{
+    background-color: #F7EFE5;
+}
+.bg-300 {
+    background-color: #D7A8EB;
+}
+.bg-400 {
+    background-color: #B50DFD;
+}
+
+/* BOTONES */
+.btn-300 {
+    background-color: #D7A8EB;
+    border-color: #D7A8EB;
+    color: #FFFBF5;
+}
+.btn-400 {
+    background-color: #B50DFD;
+    border-color: #B50DFD;
+    color: #F7EFE5;
+}
+
