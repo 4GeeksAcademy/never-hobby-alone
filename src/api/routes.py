@@ -370,18 +370,18 @@ def send_pwd_recovery():
 #     current_app.mail.send(msg)
 #     return jsonify({"msg": "En enlace de recuperación ha sido enviado al correo indicado"}), 200
 
-# @api.route('/reset_password/<token>', methods=['POST']) #<---HERE
-# def reset(token):
-#     if current_user.is_authenticated:
-#         return redirect(url_for('users.home'))
-#     user = Users.verify_reset_token(token)
-#     if user is None:
-#         print('Invalid token')
-#         return redirect(url_for('users.forgot'))
+@api.route('/reset_password/<token>', methods=['POST']) #<---HERE
+def reset(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('users.home'))
+    user = Users.verify_reset_token(token)
+    if user is None:
+        print('Invalid token')
+        return redirect(url_for('users.forgot'))
     
-#     if request.method == 'POST':
-#         formDict = request.form.to_dict()
-#         user.password = formDict.get('password')
-#         db.session.commit()
-#         return render_template_string("Your password has been updated!")
-#     return render_template('reset_password.html')
+    if request.method == 'POST':
+        formDict = request.form.to_dict()
+        user.password = formDict.get('password')
+        db.session.commit()
+        return render_template_string("Your password has been updated!")
+    return render_template('reset_password.html')
