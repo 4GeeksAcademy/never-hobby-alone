@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CreateEventForm from "./pages/createEventForm";
 import { Events } from "./pages/events";
 import { UpdateEventPage } from "./pages/updateEventPage";
+import { RestorePassword } from "./pages/PasswordRestoration";
 import { Cloudinary } from "./pages/cloudinary";
 
 //create your first component
@@ -40,8 +41,9 @@ const Layout = () => {
                         <Route element={<CreateEventForm />} path="/createEventForm" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EventDescription />} path="/description/:theid" />
-                        <Route path="events/:category" element={<Events />} />
-                        <Route element={<UpdateEventPage/>} path="/event/:theid" />
+                        <Route element={<Events />} path="events/:category" />
+                        <Route element={<UpdateEventPage />} path="/event/:theid" />
+                        <Route element={<RestorePassword />} path="/restore_password/:token" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

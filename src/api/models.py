@@ -1,7 +1,7 @@
 from flask import current_app
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
+from itsdangerous import URLSafeTimedSerializer as Serializer
 import random #importamos ramdom y string para generar una clave aleatoria nueva
 import string
 
@@ -55,7 +55,7 @@ class User(db.Model):
         return token #<---HERE
 
     @staticmethod
-    def verify_reset_token(token, expiration=3600):
+    def verify_reset_token(token, expiration=300):
         serializer = Serializer(current_app.config['SECRET_KEY'])
 
         try:

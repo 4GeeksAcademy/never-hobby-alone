@@ -315,9 +315,9 @@ def update_user(id):
 
 
 #Endpoint email con enlace a recuperación de contraseña
-@api.route("/send_pwd_recovery", methods=["POST"])
+@api.route("/send_pwd_restoration", methods=["POST"])
 
-def send_pwd_recovery():
+def send_pwd_restoration():
     recover_email = request.json['email']
 
     if not recover_email:
@@ -329,59 +329,32 @@ def send_pwd_recovery():
         return jsonify({"msg": "El correo ingresado no existe en nuestros registros"}), 400
     
     # #si existe guardo la nueva contraseña aleatoria
-    recovery_token = User.get_reset_token(user)
+    restoration_token = User.get_reset_token(user)
     db.session.commit()
 
     #luego se la envio al usuario por correo para que pueda ingresar
     msg = Message("Never Hobby Alone: Restablecimiento de contraseña", recipients=[recover_email])
     msg.html = f"""<p>Hola {user.name},</p> 
-      <p>Haz click en el siguiente enlace para acceder a la recuperación de contraseña:</p>
-      <p><strong><a href="https://curly-waddle-pqrj6vjgp6v36gqj-3001.app.github.dev/forgot_password/{recovery_token}">https://curly-waddle-pqrj6vjgp6v36gqj-3001.app.github.dev/forgot_password/{recovery_token}</a></strong></p> 
+      <p>Haz click en el siguiente enlace para acceder a la recuperación de contraseña. El enlace estará activo durante 5 minutos:</p>
+      <p><strong><a href="https://curly-waddle-pqrj6vjgp6v36gqj-3000.app.github.dev/restore_password/{restoration_token}">https://curly-waddle-pqrj6vjgp6v36gqj-3000.app.github.dev/restore_password/{restoration_token}</a></strong></p> 
       <p>El equipo de Never Hobby Alone le desea un buen dia y le agradece su confianza.</p>
       <p>Saludos cordiales.</p>"""
     current_app.mail.send(msg)
     return jsonify({"msg": "En enlace de recuperación ha sido enviado al correo indicado"}), 200
 
 
-# #Endpoint de recuperación de contraseña
-# @api.route("/forgot_password/<string:recovery_token>", methods=["POST"])
-# def send_pwd_recovery(recover_token):
-#     recover_email = request.json['email']
-#     recovery_token = User.get_reset_token(1800)
-#     print("ESTO ES EL TOKEN ",recovery_token)
+# Endpoint de recuperación de contraseña
+@api.route('/restore_password/<string:token>', methods=['POST'])
 
-#     if not recover_email:
-#         return jsonify({"msg": "Debe ingresar el correo"}), 400
+def restore_password(token):
     
-#     #busco si el correo existe en mi base de datos
-#     user = User.query.filter_by(email=recover_email).first()
-#     if user == None:
-#         return jsonify({"msg": "El correo ingresado no existe en nuestros registros"}), 400
-#     # #si existe guardo la nueva contraseña aleatoria
-#     # user.password = recover_password
-#     db.session.commit()
-#     #luego se la envio al usuario por correo para que pueda ingresar
-#     msg = Message("Never Hobby Alone: Restablecimiento de contraseña", recipients=[recover_email])
-#     msg.html = f"""<p>Hola {user.name},</p> 
-#       <p>Haz click en el siguiente enlace para acceder a la recuperación de contraseña:</p>
-#       <p><strong><a href="https://curly-waddle-pqrj6vjgp6v36gqj-3001.app.github.dev/forgot_password/{recovery_token}">https://curly-waddle-pqrj6vjgp6v36gqj-3001.app.github.dev/forgot_password/{recovery_token}</a></strong></p> 
-#       <p>El equipo de Never Hobby Alone le desea un buen dia y le agradece su confianza.</p>
-#       <p>Saludos cordiales.</p>"""
-#     current_app.mail.send(msg)
-#     return jsonify({"msg": "En enlace de recuperación ha sido enviado al correo indicado"}), 200
+    user = User.verify_reset_token(token)
+    print(user)
+    if user == None:
+        return jsonify({"msg": "Sorry, the url was already expired. Try to restore your password again."}), 400
+    
+    new_password = request.json['new_password']
+    user.password = new_password
+    db.session.commit()
 
-@api.route('/reset_password/<token>', methods=['POST']) #<---HERE
-def reset(token):
-    if current_user.is_authenticated:
-        return redirect(url_for('users.home'))
-    user = Users.verify_reset_token(token)
-    if user is None:
-        print('Invalid token')
-        return redirect(url_for('users.forgot'))
-    
-    if request.method == 'POST':
-        formDict = request.form.to_dict()
-        user.password = formDict.get('password')
-        db.session.commit()
-        return render_template_string("Your password has been updated!")
-    return render_template('reset_password.html')
+    return jsonify({"msg": "La contraseña ha sido actualizada correctamente."}), 200

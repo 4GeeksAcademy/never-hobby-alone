@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";;
 import { Context } from "../store/appContext";
 import { SignUpModal } from "./SignUpModal";
-import { PasswordRecoveryModal } from "./PasswordRecoveryModal";
+import { PasswordRecoveryModal } from "./PasswordRestorationModal";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 

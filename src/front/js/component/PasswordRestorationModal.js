@@ -9,7 +9,7 @@ export const PasswordRecoveryModal = props => {
 
     const handlePWRecovery = async (e) => {
         e.preventDefault()
-        let sentEmail = await actions.sendEmail(email);
+        let sentEmail = await actions.sendPWDRestoration(email);
         if (sentEmail == true) {
             props.onClose()
         }

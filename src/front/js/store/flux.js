@@ -201,9 +201,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            sendEmail: async (email) => {
+            sendPWDRestoration: async (email) => {
                 try {
-                    let response = await fetch(process.env.BACKEND_URL + "/api/forgot_password", {
+                    let response = await fetch(process.env.BACKEND_URL + "/api/send_pwd_restoration", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -217,6 +217,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                         toast.success(data.msg)
 
+                        return true;
+                    } else {
+                        toast.error(data.msg);
+                        return false;
+                    }
+                } catch (error) {
+                    toast.error(error);
+                    console.log(error);
+                    return false;
+                }
+            },
+
+            restorePassword: async (new_password, token) => {
+                try {
+                    console.log(new_password);
+                    let response = await fetch(process.env.BACKEND_URL + `/api/restore_password/${token}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "new_password": new_password
+                        })
+                    });
+                    let data = await response.json();
+                    if (response.status >= 200 && response.status < 300) {
+
+                        toast.success(data.msg)
                         return true;
                     } else {
                         toast.error(data.msg);
