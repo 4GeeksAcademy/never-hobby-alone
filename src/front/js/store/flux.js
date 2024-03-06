@@ -155,7 +155,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             uploadImage: async (body) => {
                 const res = await fetch(
-                    "https://api.cloudinary.com/v1_1/dx9hfbqam/image/upload",
+                    `https://api.cloudinary.com/v1_1/` + process.env.IMAGE_IMPORT + `/image/upload`,
                     {
                         method: "POST",
                         body: body
