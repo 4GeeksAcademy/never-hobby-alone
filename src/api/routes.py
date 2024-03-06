@@ -335,7 +335,7 @@ def send_pwd_restoration():
     msg = Message("Never Hobby Alone: Restablecimiento de contraseña", recipients=[recover_email])
     msg.html = f"""<p>Hola {user.name},</p>
       <p>Haz click en el siguiente enlace para acceder a la recuperación de contraseña. El enlace estará activo durante 5 minutos:</p>
-      <p><strong><a href="{BACKEND_URL}/restore_password/{restoration_token}">https://curly-waddle-pqrj6vjgp6v36gqj-3000.app.github.dev/restore_password/{restoration_token}</a></strong></p>
+      <p><strong><a href="https://sample-service-name-xrgb.onrender.com/restore_password/{restoration_token}">https://sample-service-name-xrgb.onrender.com/restore_password/{restoration_token}</a></strong></p>
       <p>El equipo de Never Hobby Alone le desea un buen dia y le agradece su confianza.</p>
       <p>Saludos cordiales.</p>"""
     current_app.mail.send(msg)
