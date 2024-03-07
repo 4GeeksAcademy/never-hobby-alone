@@ -59,7 +59,7 @@ export const Home = () => {
 
             <div className="row m-1">
                 <div className="carousel-container">
-                    <div className={store.events.length>4 ? "d-flex justify-content-between": "d-none"}>
+                    <div className={"d-flex justify-content-between"}>
                         <button className="btn btn-lg m-1 bg-300 text-black carousel-button carousel-button-prev" onClick={handlePrev}>
                             <span className="carousel-button-icon">&#10094;</span>
                         </button>

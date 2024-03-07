@@ -46,7 +46,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white">
       <div className="container d-flex justify-content-between">
         <div className="navbar-brand col-xl-3 col-lg-3 col-md-12 col-12">
-          <img className="img-thumbnail border-0" src={Logo} alt="" onClick={handleClickHome} />
+          <img className="img-thumbnail border-0 " src={Logo} alt="" onClick={handleClickHome}/>
         </div>
 
         {/*Esta parte son los botones de la derecha */}
