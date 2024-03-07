@@ -7,12 +7,23 @@ import { useNavigate } from "react-router-dom";
 
 function CreateEventForm() {
   const { actions, store } = useContext(Context);
-
+  const [altura, setAltura] = useState(window.innerWidth < 768 ? '' : '100vh');
   const [url_img, setUrl_img] = useState("https://i.pinimg.com/564x/e6/c3/4a/e6c34afdf235e76c31344d6a933cae27.jpg")
   const navigate = useNavigate();
   useEffect(() => {
     actions.getCategories();
-  }, [actions]);
+
+    const cambiarAltura = () => {
+      setAltura(window.innerWidth < 768 ? '' : '100vh');
+    };
+
+    window.addEventListener('resize', cambiarAltura);
+
+    return () => {
+      window.removeEventListener('resize', cambiarAltura);
+    };
+
+  }, []);
 
   const [formData, setFormData] = useState({
     evento: '',
@@ -29,7 +40,7 @@ function CreateEventForm() {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const [showErrorModal, setShowErrorModal] = useState(false)
-
+ 
   const changeUploadImage = async (e) => {
     const files = e.target.files[0];
     const data = new FormData();
@@ -79,17 +90,17 @@ function CreateEventForm() {
   const hoy = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="container">
+    <div className="container" style={{ height: altura }}>
       <div className="row justify-content-center">
         <div className="col-md-8">
           <h2 className="text-center mb-4">Create Event</h2>
           <form className="row g-3" onSubmit={handleSubmit}>
             <div className="col-md-8">
-              <label for="inputEmail4" className="form-label">Event:</label>
+              <label htmlFor="inputEmail4" className="form-label">Event:</label>
               <input type="text" name="evento" className="form-control" value={formData.evento} onChange={handleChange} required/>
             </div>
             <div className="col-md-4">
-              <label for="inputPassword4" className="form-label">City:</label>
+              <label htmlFor="inputPassword4" className="form-label">City:</label>
               <input type="text" name="ciudad" className="form-control" value={formData.ciudad} onChange={handleChange} required />
             </div>
             <div className="mb-3 col-12">
@@ -127,11 +138,11 @@ function CreateEventForm() {
               <button type="submit" className="btn bg-400 text-white mb-3">Create Event</button>
             </div>
           </form>
-          {showSuccessModal && <SuccessModal onClose={() => {
+          {/* {showSuccessModal && <SuccessModal onClose={() => {
             setShowSuccessModal(false)
             navigate('/');
           }} />}
-          {showErrorModal && <ErrorModal onClose={() => setShowErrorModal(false)} />}
+          {showErrorModal && <ErrorModal onClose={() => setShowErrorModal(false)} />} */}
         </div>
       </div>
     </div>
