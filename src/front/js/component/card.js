@@ -27,7 +27,7 @@ export const Card = (props) => {
             <img src={props.img} className="card-img-top" alt="..." style={{height:"220px"}}/>
             <div className="card-body" style={{ height: "100px" }}>
                 <h5 className="card-title">{props.evento}</h5>
-                <p className="card-text mb-2">{props.descripcion}</p>
+                <p className="card-text mb-2 text-truncate">{props.descripcion}</p>
             </div>
             <div className="card-body mt-1">
                 <p className="card-text">City: {props.ciudad}</p>
