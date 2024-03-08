@@ -30,9 +30,9 @@ def login():
     password = request.json.get("password", None)
     user_query = User.query.filter_by(email = email).first()
     if user_query is None:
-        return jsonify({"msg": "Correo no existe"}), 401
+        return jsonify({"msg": "Email doesn't exist."}), 401
     if email != user_query.email or password != user_query.password:
-        return jsonify({"msg": "Bad email or password"}), 401
+        return jsonify({"msg": "Wrong password or email."}), 401
     access_token = create_access_token(identity=email)
     return jsonify({
         "access_token": access_token,
@@ -53,7 +53,7 @@ def get_users_attend_all_events():
     
     response_body = {
 
-        "msg": "Usuarios que asisten a todos los eventos",
+        "msg": "Users asisting every events",
         "results": results_events
     }
 
@@ -72,14 +72,14 @@ def signup():
     ############ manejo de errores ##############
     existing_user = User.query.filter_by(email=email).first()
     if existing_user:
-        return jsonify({"msg": "El correo electrónico ya está en uso"}), 400
+        return jsonify({"msg": "Email is alredy being used."}), 400
     
 
     new_user = User(name=name, email=email, password=password)
     db.session.add(new_user)
     db.session.commit()
     
-    return jsonify({"msg": "Usuario registrado exitosamente"}), 201
+    return jsonify({"msg": "User successfully registered."}), 201
 
 
 
@@ -133,11 +133,11 @@ def create_event():
     id_categoria = request.json["categoria"]
     categoria_query = Categoria.query.filter_by(id=int(id_categoria)).first()
     if not categoria_query:
-        return jsonify({"msg": "Categoría no encontrada"}), 404
+        return jsonify({"msg": "Category not found"}), 404
     # categoria_data = categoria_query.serialize()
     required_fields = ['evento', 'ciudad', 'ubicacion', 'fecha', 'max_personas']
     if not all(field in request.json for field in required_fields):
-        return jsonify({"msg": "Error al crear el evento: faltan campos requeridos"}), 400
+        return jsonify({"msg": "Error while creating the event: some fields are required."}), 400
     try:
         new_event = Evento(
             evento=request.json['evento'],
@@ -154,8 +154,8 @@ def create_event():
         db.session.add(new_event)
         db.session.commit()
     except Exception as e:
-        return jsonify({"msg": f"Error al crear el evento: {str(e)}"}), 500
-    return jsonify({"msg": "Evento creado exitosamente"}), 201
+        return jsonify({"msg": f"Error while creating the event: {str(e)}"}), 500
+    return jsonify({"msg": "Event successfully created."}), 201
 
 
 
@@ -199,9 +199,9 @@ def eventAsist(id):
         new_asist = Asistencia(user_id= user_data["id"], evento_id= id)
         db.session.add(new_asist)
         db.session.commit()
-        return jsonify("Asistencia a Evento correcta"), 201
+        return jsonify("Correct event assistance."), 201
     
-    return jsonify("Usuario no encontrado"), 400
+    return jsonify("User not found."), 400
 
 
 @api.route('/categories', methods=['GET'])
@@ -224,16 +224,16 @@ def delete_event(id):
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email=current_user).first()
     if not user_query:
-        return jsonify({"msg": "Usuario no encontrado"}), 400
+        return jsonify({"msg": "User not found."}), 400
     
     event = Evento.query.filter_by(id=id, user_creador=user_query.id).first()
     if not event:
-        return jsonify({"msg": "Evento no encontrado"}), 400
+        return jsonify({"msg": "Event not found."}), 400
 
     db.session.delete(event)
     db.session.commit()
     
-    return jsonify({"msg": "Evento eliminado exitosamente"}), 200
+    return jsonify({"msg": "Event successfully deleted."}), 200
 
 
 # Dejar de Asistir a un evento:
@@ -248,11 +248,11 @@ def dejar_de_asistir(id):
         if asistencia:
             db.session.delete(asistencia)
             db.session.commit()
-            return jsonify({"msg": "Has dejado de asistir al evento exitosamente"}), 200
+            return jsonify({"msg": "You left the event. See in the next one!"}), 200
         else:
-            return jsonify({"msg": "No estás registrado para este evento"}), 400
+            return jsonify({"msg": "You are not registered in this event."}), 400
     else:
-        return jsonify({"msg": "Usuario no encontrado"}), 404
+        return jsonify({"msg": "User not found."}), 404
     
     # Actualizar un evento
 
@@ -263,11 +263,11 @@ def update_event(id):
     current_user = get_jwt_identity()
     user_query = User.query.filter_by(email=current_user).first()
     if not user_query:
-        return jsonify({"msg": "Usuario no encontrado"}), 400
+        return jsonify({"msg": "User not found."}), 400
     
     event = Evento.query.filter_by(id=id, user_creador=user_query.id).first()
     if not event:
-        return jsonify({"msg": "Evento no encontrado"}), 400
+        return jsonify({"msg": "Event not found."}), 400
 
     data = request.json
     if 'evento' in data:
@@ -289,7 +289,7 @@ def update_event(id):
     
     db.session.commit()
     
-    return jsonify({"msg": "Evento actualizado exitosamente"}), 200
+    return jsonify({"msg": "Event successfully updated."}), 200
 
 @api.route('/user/<int:id>', methods=['PUT'])
 @jwt_required()
@@ -298,10 +298,10 @@ def update_user(id):
     user_query = User.query.filter_by(email=current_user).first()
 
     if not user_query:
-        return jsonify({"msg": "Usuario no encontrado"}), 400
+        return jsonify({"msg": "User not found."}), 400
     
     if user_query.id != id:
-        return jsonify({"msg": "No tienes permiso para actualizar este usuario"}), 400
+        return jsonify({"msg": "You have no permission for updating this event."}), 400
 
     data = request.json
 
@@ -314,7 +314,7 @@ def update_user(id):
 
     db.session.commit()
 
-    return jsonify({"msg": "Usuario actualizado exitosamente"}), 200
+    return jsonify({"msg": "User successfully updated."}), 200
 
 
 #Endpoint email con enlace a recuperación de contraseña
@@ -323,11 +323,11 @@ def send_pwd_restoration():
     print(BACKEND_URL)
     recover_email = request.json['email']
     if not recover_email:
-        return jsonify({"msg": "Debe ingresar el correo"}), 400
+        return jsonify({"msg": "You must enter an email."}), 400
     #busco si el correo existe en mi base de datos
     user = User.query.filter_by(email=recover_email).first()
     if user == None:
-        return jsonify({"msg": "El correo ingresado no existe en nuestros registros"}), 400
+        return jsonify({"msg": "Email doesn't exist in our database."}), 400
     # #si existe guardo la nueva contraseña aleatoria
     restoration_token = User.get_reset_token(user)
     db.session.commit()
@@ -353,4 +353,4 @@ def restore_password(token):
     new_password = request.json['new_password']
     user.password = new_password
     db.session.commit()
-    return jsonify({"msg": "La contraseña ha sido actualizada correctamente."}), 200
+    return jsonify({"msg": "Password has been successfully updated."}), 200
