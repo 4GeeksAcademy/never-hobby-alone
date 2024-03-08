@@ -20,7 +20,7 @@ export const DeleteEventModal = props => {
 				<div className="modal-dialog" role="document">
 					<div className="modal-content">
 						<div className="modal-header bg-100 d-flex flex-column px-5">
-							<h4 className="modal-title">Are you sure to delete the event?</h4>
+							<h4 className="modal-title">Are you sure you want to delete this event?</h4>
                             <button className="btn btn-300 to-be-hoved text-white my-2 rounded col-12 col-md-4" onClick={deleteEvent}>YES</button>
                             <button className="btn btn-300 to-be-hoved text-white rounded col-12 col-md-4" onClick={() => props.onClose()}>NO</button>
 						</div>

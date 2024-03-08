@@ -83,7 +83,7 @@ function CreateEventForm() {
       })
       navigate("/")
     } catch (error) {
-      toast.error('Error al actualizar los datos del evento');
+      toast.error('An error has occur while updating the event.');
 
     }
   };

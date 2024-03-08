@@ -25,7 +25,7 @@ export const SignUpModal = props => {
             props.onClose();
         }
 
-        else { console.log("El correo electrónico ya existe"); }
+        else { console.log("This email already exists"); }
 
     }
 

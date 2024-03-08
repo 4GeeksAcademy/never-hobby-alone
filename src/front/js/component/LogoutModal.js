@@ -25,7 +25,7 @@ export const LogoutModal = props => {
 				<div className="modal-dialog" role="document">
 					<div className="modal-content">
 						<div className="modal-header bg-100 px-5">
-							<h4 className="modal-title">Are you sure to log out?</h4>
+							<h4 className="modal-title">Are you sure you want to log out?</h4>
                         </div>
                         <div className="modal-body w-100 px-5 d-flex flex-column align-items-center">
                             <button className="btn btn-300 to-be-hoved text-white mb-2 rounded col-4" onClick={logOut}>YES</button>

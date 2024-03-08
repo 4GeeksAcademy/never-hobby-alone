@@ -60,8 +60,8 @@ export const Navbar = () => {
                 </div>
               </button>
               <ul className="dropdown-menu border-0 dropdown-menu-end dropdown-menu-start">
-                <li><button className="dropdown-item btn-400 mb-2 rounded" onClick={handleClickProfile}>User</button></li>
-                <li><button className="dropdown-item btn-400 rounded" onClick={logOut}>Sign off</button></li>
+                <li><button className="dropdown-item btn-400 mb-2 rounded" onClick={handleClickProfile}>User profile</button></li>
+                <li><button className="dropdown-item btn-400 rounded" onClick={logOut}>Log out</button></li>
               </ul>
             </div>
           ) :

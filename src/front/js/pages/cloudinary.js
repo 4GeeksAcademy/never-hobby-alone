@@ -22,7 +22,7 @@ export const Cloudinary = () => {
   
 	return (
 		<div className="d-flex flex-column align-items-center gap-3">
-			<h1>Seleccionar imagen para Cloudinary</h1>
+			<h1>Select an image for Cloudinary</h1>
             <div>
                 <input className="m-3" type="file" accept="image/*" onChange={changeUploadImage}></input>
                 <img src={url_img} style={{width: "250px", height: "250px"}}/>

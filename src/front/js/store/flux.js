@@ -279,24 +279,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                         setStore((prevState) => ({
                             ...prevState,
                             events: [...prevState.events, data], // asumiendo que 'data' contiene el evento creado
-                            feedback: { type: 'success', message: 'Evento creado exitosamente' },
+                            feedback: { type: 'success', message: 'Event created successfully.' },
                         }));
-                        toast.success("Datos del evento creados exitosamente");
+                        toast.success("Event created successfully.");
                         getActions().obtenerEventos(); // Actualiza la lista de eventos
                     } else {
                         // Actualizar el estado con el error
                         setStore((prevState) => ({
                             ...prevState,
-                            feedback: { type: 'error', message: `Error al crear el evento: ${data.msg}` },
+                            feedback: { type: 'error', message: `Error while creating the event: ${data.msg}` },
                         }));
                         toast.error(data.msg);
                     }
                 } catch (error) {
-                    console.error("Error al crear el evento:", error);
-                    toast.error("Error al crear evento");
+                    console.error("Error while creating the event:", error);
+                    toast.error("Error while creating the event.");
                     setStore((prevState) => ({
                         ...prevState,
-                        feedback: { type: 'error', message: 'Error al crear el evento. Inténtalo de nuevo.' },
+                        feedback: { type: 'error', message: 'Error while creating the event. Try again.' },
                     }));
                 }
             },
@@ -320,13 +320,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                         // setStore(prevState => ({
                         //     events: prevState.events.filter(event => event.id !== id)
                         // }));
-                        toast.success("Evento eliminado exitosamente");
+                        toast.success("Event deleted.");
                     } else {
                         toast.error(data.msg);
                     }
                 } catch (error) {
                     console.error(error);
-                    toast.error("Error al eliminar el evento");
+                    toast.error("Error while deleting the event.");
                 }
             },
 
@@ -372,13 +372,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                         // Actualiza el estado con los nuevos datos del evento
                         await getActions().obtenerOneEvento(id);
 
-                        toast.success("Datos del evento actualizados exitosamente");
+                        toast.success("Event data successfully updated.");
                     } else {
                         toast.error(data.msg);
                     }
                 } catch (error) {
                     console.error(error);
-                    toast.error("Error al actualizar los datos del evento");
+                    toast.error("Error while updating the event.");
                 }
             },
 
@@ -402,13 +402,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                         // await getActions().obtenerInfoUsuario();
                         localStorage.setItem("user", newData.name);
                         localStorage.setItem("email", newData.email);
-                        toast.success("Datos del usuario actualizados exitosamente");
+                        toast.success("User data successfully updated.");
                     } else {
                         toast.error(data.msg);
                     }
                 } catch (error) {
                     console.error(error);
-                    toast.error("Error al actualizar los datos del usuario");
+                    toast.error("Error while updating user.");
                 }
             }
 
