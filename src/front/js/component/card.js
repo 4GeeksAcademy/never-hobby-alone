@@ -30,8 +30,8 @@ export const Card = (props) => {
                 <p className="card-text mb-2 text-truncate">{props.descripcion}</p>
             </div>
             <div className="card-body mt-1">
-                <p className="card-text">City: {props.ciudad}</p>
-                <p className="card-text">Date: {fechaFormateada}</p>
+                <p className="card-text"><strong>City:</strong> {props.ciudad}</p>
+                <p className="card-text"><strong>Date:</strong> {fechaFormateada}</p>
             </div>
             <button type="button" onClick={handleClick} className="btn btn-300 text-white to-be-hoved col-5 m-auto mb-3 rounded ">
                 See details!
